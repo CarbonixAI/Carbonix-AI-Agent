@@ -1,0 +1,21 @@
+const Web3 = require('web3');
+const web3 = new Web3('http://localhost:8545');  // Replace with your Ethereum node URL
+
+const contractABI = [...]  // ABI from the compiled smart contract
+const contractAddress = '0xYourContractAddress';
+
+const contract = new web3.eth.Contract(contractABI, contractAddress);
+
+async function issueCarbonCredits(toAddress, amount) {
+  const accounts = await web3.eth.getAccounts();
+  const result = await contract.methods.issueCarbonCredit(toAddress, amount)
+    .send({ from: accounts[0] });
+  console.log(result);
+}
+
+async function transferCarbonCredits(fromAddress, toAddress, amount) {
+  const accounts = await web3.eth.getAccounts();
+  const result = await contract.methods.transferCarbonCredit(toAddress, amount)
+    .send({ from: fromAddress });
+  console.log(result);
+}
