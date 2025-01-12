@@ -1,0 +1,13 @@
+const axios = require('axios');
+
+// Call AI service from backend
+app.post('/api/predict-emission', async (req, res) => {
+  try {
+    const response = await axios.post('http://localhost:6000/predict', {
+      features: req.body.features,
+    });
+    res.json(response.data);
+  } catch (error) {
+    res.status(500).send('Error predicting emission');
+  }
+});
