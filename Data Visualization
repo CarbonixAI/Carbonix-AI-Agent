@@ -1,0 +1,41 @@
+import * as d3 from 'd3';
+import React, { useEffect, useRef } from 'react';
+
+const Chart = ({ data }) => {
+  const chartRef = useRef();
+
+  useEffect(() => {
+    const svg = d3.select(chartRef.current)
+      .attr('width', 500)
+      .attr('height', 300);
+
+    svg.selectAll('rect')
+      .data(data)
+      .enter()
+      .append('rect')
+      .attr('x', (d, i) => i * 60)
+      .attr('y', d => 300 - d.value)
+      .attr('width', 50)
+      .attr('height', d => d.value)
+      .attr('fill', 'teal');
+  }, [data]);
+
+  return <svg ref={chartRef}></svg>;
+};
+
+const App = () => {
+  const data = [
+    { name: 'Industry', value: 200 },
+    { name: 'Transport', value: 150 },
+    { name: 'Energy', value: 250 },
+  ];
+
+  return (
+    <div>
+      <h1>Carbon Emissions Breakdown</h1>
+      <Chart data={data} />
+    </div>
+  );
+};
+
+export default App;
